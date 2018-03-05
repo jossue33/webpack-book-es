@@ -1,32 +1,32 @@
-# Source Maps
+# Mapas fuente
 
 ![Source maps in Chrome](images/sourcemaps.png)
 
-When your source code has gone through any transformations, debugging becomes a problem. When debugging in a browser, how to tell where the original code is? **Source maps** solve this problem by providing a mapping between the original and the transformed source code. In addition to source compiling to JavaScript, this works for styling as well.
+Cuando tu código fuente ha pasado por alguna transformación, depurar se convierte en un problema. Al hacer depuración en un navegador, ¿cómo decir dónde está el código original? **Source maps** resolver este problema proporcionando un mapeado entre el código fuente original y el modificado. En edición a la compilación fuente a JavaScript, esto funciona para diseño también.
 
-One approach is to simply skip source maps during development and rely on browser support of language features. If you use ES2015 without any extensions and develop using a modern browser, this can work. The advantage of doing this is that you avoid all the problems related to source maps while gaining better performance.
+Una aproximación es simplemente omitir los mapas fuente durante el desarrollo y confiar en el soporte del navegador de características de lenguaje. Si usas ES2015 sin ninguna extensión y desarrollas usando un navegador moderno, esto puede funcionar. La ventaja de hacer esto es que evitas todos los problemas relacionados a mapas fuente mientras ganas un mejor rendimiento.
 
-T> If you want to understand the ideas behind source maps in greater detail, [read Ryan Seddon's introduction to the topic](https://www.html5rocks.com/en/tutorials/developertools/sourcemaps/).
+T> Si quieres entender las ideas detras de los mapas fuente en gran detalle, [read Ryan Seddon's introduction to the topic](https://www.html5rocks.com/en/tutorials/developertools/sourcemaps/).
 
-## Inline Source Maps and Separate Source Maps
+## Mapas fuente en línea y mapas fuente separados
 
-Webpack can generate both inline source maps included within bundles or separate source map files. The former are valuable during development due to better performance while the latter are handy for production usage as it keeps the bundle size small. In this case, loading source maps is optional.
+Webpack puede generar mapas fuente, incluidos los que están dentro de paquetes o archivos de mapa fuente separados. Los primeros son importantes en el proceso de desarrollo debido al rendimiento mejorado mientras que los últimos son útiles para uso de producción mientras se mantenga pequeño el tamaño del paquete. En este caso, es opcional cargar los mapas fuente.
 
-It's possible you **don't** want to generate a source map for your production bundle as this makes it effortless to inspect your application. By disabling them you are performing a sort of obfuscation. Whether or not you want to enable source maps for production, they are handy for staging. Skipping source maps entirely speeds up your build as generating source maps at the best quality can be a complex operation.
+Es posible que tú **don't** quieras generar un mapa fuente para tu paquete de producción ya que esto hace que examinar tu aplicación sea fácil. Desactivándolas, estás realizando una especie de confusión. Quieras o no activar mapas fuente para producción, son útiles para preparar. Omitir mapas fuente completamente acelera tu versión al igual que generar mapas fuente en la mejor calidad puede ser una operación compleja.
 
-**Hidden source maps** give stack trace information only. You can connect them with a monitoring service to get traces as the application crashes allowing you to fix the problematic situations. While this isn't ideal, it's better to know about possible problems than not.
+**Hidden source maps** da solamente información de rastreo de pila. Puedes conectarlos con un servicio de monitoreo para conseguir rastros cuando la aplicación se cuelgue, permitiéndote arreglar las situaciones problemáticas. Si bien esto no es lo ideal, es mejor saber sobre los problemas posibles a que no.
 
-T> It's a good idea to study the documentation of the loaders you are using to see loader specific tips. For example, with TypeScript, you have to set a particular flag to make it work as you expect.
+T> Es una buena idea estudiar los manueales de los cargadores que estás usando para ver los consejos específicos del cargador. Por ejemplo, con TypeScript, tienes que poner una flag en particular para hacerlo funcionar como esperas.
 
-## Enabling Source Maps
+## Activar mapas fuente
 
-Webpack provides two ways to enable source maps. There's a `devtool` shortcut field. You can also find two plugins that give more options to tweak. The plugins are going to be discussed briefly at the end of this chapter. Beyond webpack, you also have to enable support for source maps at the browsers you are using for development.
+Webpack proporciona dos formas de activar los mapas fuente. Hay un acceso directo `devtool`. También puedes encontrar dos plugins que dan más opciones para modificar. Los plugins van a ser discutidos brévemente al final de este capítulo. Más allá de webpack, también tienes que activar el soporte para mapas fuente en los navegadores que estás usando para el desarrollo.
 
 {pagebreak}
 
-### Enabling Source Maps in Webpack
+### Activando mapas fuente en Webpack
 
-To get started, you can wrap the core idea within a configuration part. You can convert this to use the plugins later if you want:
+Para empezar, puedes envolver la idea principal dentro de una pieza de configuración. Puedes convertir esto para usar los plugins luego si quieres:
 
 **webpack.parts.js**
 
@@ -36,9 +36,9 @@ exports.generateSourceMaps = ({ type }) => ({
 });
 ```
 
-Webpack supports a wide variety of source map types. These vary based on quality and build speed. For now, you can enable `eval-source-map` for development and `source-map` for production. This way you get good quality while trading off performance, especially during development.
+Webpack soporta una amplia variedad de tipos de mapas fuente. Estos varían, basados en la calidad y velocidad de la versión. Por ahora, Puedes activar `eval-source-map` para desarrollo y `source-map` para producción. De esta menera, obtienes buena calidad mientras sacrificas rendimiento, especialmente durante el dessarrollo.
 
-Set these up as follows:
+Configúrelos de la siguiente manera:
 
 **webpack.config.js**
 
@@ -66,11 +66,11 @@ leanpub-end-insert
 ]);
 ```
 
-`eval-source-map` builds slowly initially, but it provides fast rebuild speed. More rapid development specific options, such as `cheap-module-eval-source-map` and `eval`, produce lower quality source maps. All `eval` options emit source maps as a part of your JavaScript code.
+`eval-source-map` construye lentamente al inicio, pero provee de una rápida velocidad de reconstrucción. Más opciones rápidas de desarrollo específicas, tales como `cheap-module-eval-source-map` y `eval`, producen mapas fuente de menor calidad. Todas las opciones `eval` emiten mapas fuente como parte de tu código JavaScript.
 
-`source-map` is the slowest and highest quality option of them all, but that's fine for a production build.
+`source-map` es la opción más lenta y de mayor calidad de todas, pero eso está bien para una construcción de producción.
 
-If you build the project now (`npm run build`), you should see source maps in the output:
+Si construyes el proyecto ahora (`npm run build`), deberías ver mapas fuente en la salida:
 
 ```bash
 Hash: 28afad28226615c16e12
@@ -95,41 +95,41 @@ leanpub-end-insert
 ...
 ```
 
-Take a good look at those *.map* files. That's where the mapping between the generated and the original source happens. During development, it writes the mapping information in the bundle itself.
+Échale un buen vistazo a esos archivos *.map*. Ahí es donde el mapeado entre la fuente original y la generada ocurre. Durante el desarrollo, hace la información de mapeado en el paquete en sí mismo.
 
-### Enabling Source Maps in Browsers
+### Activar mapas fuente en navegadores
 
-To use source maps within a browser, you have to enable source maps explicitly as per browser-specific instructions:
+Para usar mapas fuente dentro de un navegador, tienes que activar los mapas fuente axplícitamente como instrucciones específicas de navegador:
 
 * [Chrome](https://developer.chrome.com/devtools/docs/javascript-debugging). Sometimes source maps [will not update in Chrome inspector](https://github.com/webpack/webpack/issues/2478). For now, the temporary fix is to force the inspector to reload itself by using *alt-r*.
 * [Firefox](https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Use_a_source_map)
 * [IE Edge](https://developer.microsoft.com/en-us/microsoft-edge/platform/documentation/f12-devtools-guide/debugger/#source-maps)
 * [Safari](https://developer.apple.com/library/safari/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/ResourcesandtheDOM/ResourcesandtheDOM.html#//apple_ref/doc/uid/TP40007874-CH3-SW2)
 
-W> If you want to use breakpoints (i.e., a `debugger;` statement or ones set through the browser), the `eval`-based options won't work in Chrome!
+W> Si quieres usar puntos de quiebre (i.e., una declaración `debugger;` o las establecidas a través del navegador), ¡las opciones `eval`-based no funcionarán en Chrome!
 
-## Source Map Types Supported by Webpack
+## Tipos de mapa fuente soportados por Webpack
 
-Source map types supported by webpack can be split into two categories:
+Los tipos de mapa fuente soportados por webpack pueden ser separados en dos categorías:
 
-* **Inline** source maps add the mapping data directly to the generated files.
-* **Separate** source maps emit the mapping data to separate source map files and link the original source to them using a comment. Hidden source maps omit the comment on purpose.
+* **Inline** los mapas fuente añaden la información de mapeo directamente a los archivos generados.
+* **Separate** los mapas fuente emiten la información de mapeo para separar los archivos del mapa fuente y enlazar la fuente original a ellos usando un comentario. Los mapas fuente escondidos omiten el comentario a propósito.
 
-Thanks to their speed, inline source maps are ideal for development. Given they make the bundles big, separate source maps are the preferable solution for production. Separate source maps work during development as well if the performance overhead is acceptable.
+Gracias a su velocidad, mapas fuente en línea son ideales para desarrollar. Dado que hacen a los paquetes grandes, los mapas fuente separados son la opción preferible para producción. Los mapas fuente separados funcionan durante el desarrollo también si la sobrecarga de rendimiento es permitida.
 
 {pagebreak}
 
-## Inline Source Map Types
+## Tipos de mapas fuente en línea
 
-Webpack provides multiple inline source map variants. Often `eval` is the starting point and [webpack issue #2145](https://github.com/webpack/webpack/issues/2145#issuecomment-294361203) recommends `cheap-module-eval-source-map` as it's a good compromise between speed and quality while working reliably in Chrome and Firefox browsers.
+Webpack provee múltiples variantes de mapas fuente en línea. A menudo, el punto de partida es `eval` y [webpack issue #2145](https://github.com/webpack/webpack/issues/2145#issuecomment-294361203) recomienda `cheap-module-eval-source-map` ya que es una buena promesa entre velocidad y calidad, trabajando confiablemente en los navegadores Chrome y Firefox.
 
-To get a better idea of the available options, they are listed below while providing a small example for each. The source code contains only a single `console.log('Hello world')` and `webpack.NamedModulesPlugin` is used to keep the output easier to understand. In practice, you would see a lot more code to handle the mapping.
+Para tener una mejor idea de las opciones disponibles, están listadas abajo mientras se da un pequeño ejemplo de cada una. El código fuente condiente un solo `console.log('Hello world')` y `webpack.NamedModulesPlugin` se usa para mentener la salida más fácil de entender. En la práctica, verías mucho más código para manejar el mapeado.
 
-T> `webpack.NamedModulesPlugin` replaces number based module IDs with paths. It's discussed in the *Adding Hashes to Filenames* chapter.
+T> `webpack.NamedModulesPlugin` reemplaza las ID de módulos basados en números con rutas. Eso es discutido en el capítulo *Adding Hashes to Filenames*.
 
 ### `devtool: "eval"`
 
-`eval` generates code in which each module is wrapped within an `eval` function:
+`eval` genera código en el cual cada módulo es envuelto dentro de una función `eval`:
 
 ```javascript
 webpackJsonp([1, 2], {
@@ -143,7 +143,7 @@ webpackJsonp([1, 2], {
 
 ### `devtool: "cheap-eval-source-map"`
 
-`cheap-eval-source-map` goes a step further and it includes base64 encoded version of the code as a data url. The result includes only line data while losing column mappings.
+`cheap-eval-source-map` va un paso adelante e incluye versiones codificadas base64 del código como una url de información. El resultado incluye sólo datos de línea mientras pierde mapeos de columna.
 
 ```javascript
 webpackJsonp([1, 2], {
@@ -153,7 +153,7 @@ webpackJsonp([1, 2], {
 }, ["./app/index.js"]);
 ```
 
-If you decode that base64 string, you get output containing the mapping:
+Si decodificas esa cadena base64, obtienes salidas que contienen el mapeo:
 
 ```json
 {
@@ -174,7 +174,7 @@ If you decode that base64 string, you get output containing the mapping:
 
 ### `devtool: "cheap-module-eval-source-map"`
 
-`cheap-module-eval-source-map` is the same idea, except with higher quality and lower performance:
+`cheap-module-eval-source-map` es la misma idea, exepto con una mayor calidad y un rendimiento más bajo:
 
 ```javascript
 webpackJsonp([1, 2], {
@@ -184,7 +184,7 @@ webpackJsonp([1, 2], {
 }, ["./app/index.js"]);
 ```
 
-Again, decoding the data reveals more:
+De nuevo, decodificar la información revela más:
 
 ```json
 {
@@ -201,13 +201,13 @@ Again, decoding the data reveals more:
 }
 ```
 
-In this particular case, the difference between the options is minimal.
+En este caso en particular, la diferencia entre las opciones es mínima.
 
 {pagebreak}
 
 ### `devtool: "eval-source-map"`
 
-`eval-source-map` is the highest quality option of the inline options. It's also the slowest one as it emits the most data:
+`eval-source-map` es la opción de mayor calidad de las que están en línea. También es la más lenta ya que es la que emite más información:
 
 ```javascript
 webpackJsonp([1, 2], {
@@ -217,7 +217,7 @@ webpackJsonp([1, 2], {
 }, ["./app/index.js"]);
 ```
 
-This time around there's more mapping data available for the browser:
+Esta vez, hay más datos de mapeo disponibles para el navegador:
 
 ```json
 {
@@ -240,11 +240,11 @@ This time around there's more mapping data available for the browser:
 
 {pagebreak}
 
-## Separate Source Map Types
+## Tipos de mapas fuente separados
 
-Webpack can also generate production usage friendly source maps. These end up in separate files ending with `.map` extension and are loaded by the browser only when required. This way your users get good performance while it's easier for you to debug the application.
+Webpack también puede generar mapas fuente amigables de uso de producción. Estos finalizan en archivos separados que terminan con la extensión `.map` y que son cargadas por el navegador sólo cuando es requerido. De esta forma, tus usuarios obtienen un buen rendimiento al mismo tiempo que es más fácil para ti depurar la aplicación.
 
-`source-map` is a good default here. Even though it takes longer to generate the source maps this way, you get the best quality. If you don't care about production source maps, you can simply skip the setting there and get better performance in return.
+`source-map` es un buen valor por defecto aquí. Aunque tarda más generar los mapas fuente de esta manera, obtienes la mejor calidad. Si no te importan los mapas fuente de producción, puedes simplemente omitir las configuraciones ahí y tener un mejor renidmiento a cambio.
 
 ### `devtool: "cheap-source-map"`
 
